@@ -1,0 +1,15 @@
+{
+  "name": "cds-logo",
+  "source": "src/index.ts",
+  "scripts": {
+    "build": "parcel build src/index.html --public-url ./",
+    "watch": "parcel watch src/index.html --public-url ./",
+    "test": "jest",
+    "lint": "eslint",
+    "check": "tsc --noEmit",
+    "ci": "pnpm build ; pnpm test ; pnpm lint ; pnpm check"
+  },
+  "dependencies": {
+    "parcel": "^2.16.4"
+  }
+}

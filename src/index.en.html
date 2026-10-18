@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>CDS logo editor</title>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&display=swap">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+  <main>
+    <div class="stage">
+      <div class="frame" id="frame" aria-label="Live logo preview"></div>
+    </div>
+    <aside id="panel" class="panel">
+      <h1>Remix the CDS logo</h1>
+      <p class="lead">Change anything and watch it update. Click a part of the logo to jump to its controls.</p>
+      <div class="bar">
+        <span class="gl">Start from</span>
+        <button data-preset="p1">Preset 1</button>
+        <button data-preset="p2">Preset 2</button>
+        <button data-s="all">Shuffle everything</button>
+      </div>
+      <div class="bar">
+        <span class="gl">Image</span>
+        <button class="primary" id="png">Save PNG</button>
+        <select id="size" aria-label="PNG size">
+          <option value="1000">1000 px</option>
+          <option value="2000" selected>2000 px</option>
+          <option value="4000">4000 px</option>
+        </select>
+        <button id="svgdl" hidden>Save SVG</button>
+        <button id="copy">Copy SVG</button>
+      </div>
+      <p class="hint" id="msg" role="status"></p>
+      <nav class="tabs" id="nav" role="tablist">
+        <button role="tab" id="triangle-tab" aria-selected="true">Triangle</button>
+        <button role="tab" id="street-tab" aria-selected="false">Street</button>
+        <button role="tab" id="shadow-tab" aria-selected="false">Shadows</button>
+        <button role="tab" id="outline-tab" aria-selected="false">Outlines</button>
+        <button role="tab" id="canvas-tab" aria-selected="false">Canvas</button>
+      </nav>
+      <section id="triangle-section" aria-selected="true">
+        <h3>Gradient</h3>
+        <p class="hint">Runs from the base of the triangle up to its tip.</p>
+        <label class="row">
+          <span>Bottom</span>
+          <input type="color" data-p="triangle.from" value="#0e6b1b">
+          <output>#0e6b1b</output></label>
+        <label class="row">
+          <span>Top</span>
+          <input type="color" data-p="triangle.to" value="#45a62d">
+          <output>#45a62d</output></label>
+        <h3>Speckle</h3>
+        <label class="row">
+          <span>Fineness</span>
+          <input type="range" data-p="triangle.frequency" min="-1.3" max="1.3" step="0.01" data-log="1"
+            value="1.300008202553813">
+          <output>20</output></label>
+        <label class="row">
+          <span>Detail</span>
+          <input type="range" data-p="triangle.octaves" min="1" max="6" step="1" value="6">
+          <output>6</output></label>
+        <label class="row">
+          <span>Seed</span>
+          <input type="range" data-p="triangle.seed" min="0" max="99" step="1" value="1">
+          <output>1</output></label>
+        <div class="row">
+          <span>Noise</span>
+          <div class="seg">
+            <button data-p="triangle.type" data-v="turbulence" aria-pressed="true">Turbulence</button>
+            <button data-p="triangle.type" data-v="fractalNoise" aria-pressed="false">Fractal</button>
+          </div>
+        </div>
+        <p class="hint">Each cell is one noise level. Filled cells get painted.</p>
+        <div class="bands">
+          <button data-p="triangle.bands" data-i="0" aria-pressed="false" aria-label="Noise level 1"></button>
+          <button data-p="triangle.bands" data-i="1" aria-pressed="false" aria-label="Noise level 2"></button>
+          <button data-p="triangle.bands" data-i="2" aria-pressed="true" aria-label="Noise level 3"></button>
+          <button data-p="triangle.bands" data-i="3" aria-pressed="true" aria-label="Noise level 4"></button>
+          <button data-p="triangle.bands" data-i="4" aria-pressed="true" aria-label="Noise level 5"></button>
+          <button data-p="triangle.bands" data-i="5" aria-pressed="true" aria-label="Noise level 6"></button>
+          <button data-p="triangle.bands" data-i="6" aria-pressed="true" aria-label="Noise level 7"></button>
+          <button data-p="triangle.bands" data-i="7" aria-pressed="true" aria-label="Noise level 8"></button>
+          <button data-p="triangle.bands" data-i="8" aria-pressed="true" aria-label="Noise level 9"></button>
+          <button data-p="triangle.bands" data-i="9" aria-pressed="true" aria-label="Noise level 10"></button>
+          <button data-p="triangle.bands" data-i="10" aria-pressed="true" aria-label="Noise level 11"></button>
+          <button data-p="triangle.bands" data-i="11" aria-pressed="false" aria-label="Noise level 12"></button>
+          <button data-p="triangle.bands" data-i="12" aria-pressed="false" aria-label="Noise level 13"></button>
+        </div>
+        <label class="row">
+          <span>Color</span>
+          <input type="color" data-p="triangle.color" value="#003300">
+          <output>#003300</output>
+        </label>
+        <label class="row">
+          <span>Strength</span>
+          <input type="range" data-p="triangle.strength" min="0" max="1" step="0.05" value="1">
+          <output>1</output>
+        </label>
+        <button class="ghost" data-s="triangle">Shuffle pattern</button>
+        <h3>Side triangles</h3>
+        <label class="row">
+          <span>Show</span>
+          <input type="checkbox" data-p="triangle.sides" checked="">
+        </label>
+      </section>
+      <section id="street-section" aria-selected="false">
+        <h3>Gradient</h3>
+        <p class="hint">Runs from the bottom of the street up to the top.</p>
+        <label class="row">
+          <span>Bottom</span>
+          <input type="color" data-p="street.from" value="#d4a700">
+          <output>#d4a700</output></label>
+        <label class="row">
+          <span>Top</span>
+          <input type="color" data-p="street.to" value="#fcd34d">
+          <output>#fcd34d</output></label>
+        <h3>Cobbles</h3>
+        <label class="row">
+          <span>Fineness</span>
+          <input type="range" data-p="street.frequency" min="-1.3" max="1.3" step="0.01" data-log="1"
+            value="-0.09691001300805639">
+          <output>0.8</output></label>
+        <label class="row">
+          <span>Detail</span>
+          <input type="range" data-p="street.octaves" min="1" max="6" step="1" value="1">
+          <output>1</output></label>
+        <label class="row">
+          <span>Seed</span>
+          <input type="range" data-p="street.seed" min="0" max="99" step="1" value="2">
+          <output>2</output></label>
+        <div class="row">
+          <span>Noise</span>
+          <div class="seg">
+            <button data-p="street.type" data-v="turbulence" aria-pressed="true">Turbulence</button>
+            <button data-p="street.type" data-v="fractalNoise" aria-pressed="false">Fractal</button>
+          </div>
+        </div>
+        <p class="hint">Each cell is one noise level. Filled cells get painted.</p>
+        <div class="bands">
+          <button data-p="street.bands" data-i="0" aria-pressed="true" aria-label="Noise level 1"></button>
+          <button data-p="street.bands" data-i="1" aria-pressed="false" aria-label="Noise level 2"></button>
+          <button data-p="street.bands" data-i="2" aria-pressed="false" aria-label="Noise level 3"></button>
+          <button data-p="street.bands" data-i="3" aria-pressed="false" aria-label="Noise level 4"></button>
+          <button data-p="street.bands" data-i="4" aria-pressed="false" aria-label="Noise level 5"></button>
+          <button data-p="street.bands" data-i="5" aria-pressed="false" aria-label="Noise level 6"></button>
+          <button data-p="street.bands" data-i="6" aria-pressed="false" aria-label="Noise level 7"></button>
+          <button data-p="street.bands" data-i="7" aria-pressed="false" aria-label="Noise level 8"></button>
+          <button data-p="street.bands" data-i="8" aria-pressed="false" aria-label="Noise level 9"></button>
+          <button data-p="street.bands" data-i="9" aria-pressed="false" aria-label="Noise level 10"></button>
+          <button data-p="street.bands" data-i="10" aria-pressed="false" aria-label="Noise level 11"></button>
+          <button data-p="street.bands" data-i="11" aria-pressed="false" aria-label="Noise level 12"></button>
+          <button data-p="street.bands" data-i="12" aria-pressed="false" aria-label="Noise level 13"></button>
+        </div>
+        <label class="row">
+          <span>Color</span>
+          <input type="color" data-p="street.color" value="#996600">
+          <output>#996600</output></label>
+        <label class="row">
+          <span>Strength</span>
+          <input type="range" data-p="street.strength" min="0" max="1" step="0.05" value="1">
+          <output>1</output></label>
+        <button class="ghost" data-s="y">Shuffle pattern</button>
+      </section>
+      <section id="shadow-section" aria-selected="false">
+        <h3>Street shadow</h3>
+        <label class="row">
+          <span>Show</span>
+          <input type="checkbox" data-p="shadow.active" checked=""></label>
+        <label class="row">
+          <span>Color</span>
+          <input type="color" data-p="shadow.color" value="#000000">
+          <output>#000000</output></label>
+        <label class="row">
+          <span>Opacity</span>
+          <input type="range" data-p="shadow.opacity" min="0" max="1" step="0.02" value="1">
+          <output>1</output></label>
+        <label class="row">
+          <span>Shift
+            right</span>
+          <input type="range" data-p="shadow.dx" min="-6" max="6" step="0.5" value="0">
+          <output>0</output></label>
+        <label class="row">
+          <span>Shift up</span>
+          <input type="range" data-p="shadow.dy" min="-6" max="6" step="0.5" value="2">
+          <output>2</output></label>
+        <div class="row">
+          <span>Falls on</span>
+          <div class="seg">
+            <button data-p="shadow.mode" data-v="street" aria-pressed="true">Street</button>
+            <button data-p="shadow.mode" data-v="grass" aria-pressed="false">Triangle</button>
+          </div>
+        </div>
+        <h3>Left edge shadow</h3>
+        <label class="row">
+          <span>Show</span>
+          <input type="checkbox" data-p="edge.active" checked=""></label>
+        <label class="row">
+          <span>Color</span>
+          <input type="color" data-p="edge.color" value="#000000">
+          <output>#000000</output></label>
+        <label class="row">
+          <span>Opacity</span>
+          <input type="range" data-p="edge.opacity" min="0" max="1" step="0.02" value="1">
+          <output>1</output></label>
+        <label class="row">
+          <span>Width</span>
+          <input type="range" data-p="edge.width" min="0" max="12" step="0.5" value="4">
+          <output>4</output></label>
+      </section>
+      <section id="outline-section" aria-selected="false">
+        <h3>Triangle outline</h3>
+        <label class="row">
+          <span>Color</span>
+          <input type="color" data-p="outline.triangleColor" value="#ffffff">
+          <output>#ffffff</output></label>
+        <label class="row">
+          <span>Width</span>
+          <input type="range" data-p="outline.triangleWidth" min="0" max="3" step="0.1" value="0">
+          <output>0</output></label>
+        <h3>Street outline</h3>
+        <label class="row">
+          <span>Color</span>
+          <input type="color" data-p="outline.streetColor" value="#000000">
+          <output>#000000</output></label>
+        <label class="row">
+          <span>Width</span>
+          <input type="range" data-p="outline.streetWidth" min="0" max="3" step="0.1" value="0">
+          <output>0</output></label>
+        <h3>Corners</h3>
+        <div class="row">
+          <span>Style</span>
+          <div class="seg">
+            <button data-p="outline.joinStyle" data-v="round" aria-pressed="true">Round</button>
+            <button data-p="outline.joinStyle" data-v="miter" aria-pressed="false">Sharp</button>
+          </div>
+        </div>
+      </section>
+      <section id="canvas-section" aria-selected="false">
+        <h3>Background</h3>
+        <label class="row">
+          <span>Show</span>
+          <input type="checkbox" data-p="canvas.active"></label>
+        <label class="row">
+          <span>Color</span>
+          <input type="color" data-p="canvas.color" value="#ffffff">
+          <output>#ffffff</output></label>
+      </section>
+      <details>
+        <summary>Code and settings text</summary>
+        <textarea id="code" readonly spellcheck="false" aria-label="SVG code"></textarea>
+        <p class="hint" style="margin:10px 0 0">Settings JSON. Paste a saved configuration here and apply it.</p>
+        <textarea id="cfg" spellcheck="false" aria-label="Settings JSON"></textarea>
+        <div class="bar">
+          <button id="cfgapply">Apply settings</button>
+          <button id="cfgout">Export JSON</button>
+          <button id="cfgin">Import JSON</button>
+          <input type="file" id="file" accept=".json,application/json" hidden>
+        </div>
+      </details>
+    </aside>
+  </main>
+
+
+
+  <script type="module" src="./index.ts"></script>
+</body>
+
+</html>
